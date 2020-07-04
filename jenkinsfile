@@ -99,7 +99,6 @@ stages {
                 success {
                     slackSend channel: '#devops', message: 'Deployment  Completed'                    
                     slackSend channel: '#devops', message: 'Deployment URL-- http://34.70.188.141:8080/sample'
-                    mail bcc: '', body: 'Build Success', cc: '', from: '', replyTo: '', subject: 'Build_Status.$JOB_BASE_NAME.$BUILD_NUMBER', to: 'aktech71@gmail.com'
                     }
                 }
 
