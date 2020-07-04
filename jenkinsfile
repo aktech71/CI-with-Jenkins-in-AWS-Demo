@@ -94,6 +94,7 @@ stages {
  stage ('Deployment') {
            
             steps {
+            sh "chmod 755 ${WORKSPACE}/superLeague/**/1.0.${BUILD_NUMBER}/*.war"
             sh "ls -l ${WORKSPACE}/superLeague/**/1.0.${BUILD_NUMBER}/*.war"
             deploy adapters: [tomcat8(credentialsId: 'tomcat', path: '', url: 'http://34.70.188.141:8080')], contextPath: 'sample', war: '**/superLeague/**/1.0.${BUILD_NUMBER}/*.war'
 
