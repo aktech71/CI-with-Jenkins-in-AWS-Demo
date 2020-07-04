@@ -1,25 +1,31 @@
 pipeline{
   agent any
   stages {
-     stage('Sonarqube') {
-    environment {
-        scannerHome = tool 'sonar-scanner-4.3'
-    }
-    steps {
-        withSonarQubeEnv('sonarqube') {
-            sh "${scannerHome}/bin/sonar-scanner"
-        }
-    }
-}
+
     stage (build) {
       steps {
         sh 'mvn package'
       }
-    }  
-  }
-  post {
+   post {
     always {
       archiveArtifacts artifacts: 'project/target/*.war', followSymlinks: false, onlyIfSuccessful: true
     }
+  }
+    } 
+
+
+     stage('Sonarqube') {
+      environment {
+        scannerHome = tool 'sonar-scanner-4.3'
+    }
+    steps {
+        withSonarQubeEnv('sonar') {
+            sh "${scannerHome}/bin/sonar-scanner -Dsonar.project.settings=${WORKSPACE}/sonar-project.properties"
+        }
+    }
+}
+
+
+
   }
 }
