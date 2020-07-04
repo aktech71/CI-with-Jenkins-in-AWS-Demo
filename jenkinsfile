@@ -61,7 +61,7 @@ stages {
                   spec: '''{
                     "files": [
                     {
-                      "pattern": "libs-release-local/ci/jenkins/aws/project/1.0.${BUILd_NUMBER}/*.war",
+                      "pattern": "libs-release-local/ci/jenkins/aws/project/1.0.${BUILD_NUMBER}/*.war",
                       "target": "superLeague/"
                     }
                   ]
