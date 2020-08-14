@@ -1,0 +1,83 @@
+pipeline{
+  agent any
+  tools {
+      // Install the Maven version configured as "M3" and add it to the path.
+      maven "maven"
+   }
+stages {
+
+  stage ('Artifactory configuration') {
+            steps {
+                rtServer (
+                    id: "devops",
+                    url: "http://104.154.172.229:8082/artifactory",
+                    credentialsId: "jfrog"
+                )
+
+                rtMavenDeployer (
+                    id: "MAVEN_DEPLOYER",
+                    serverId: "devops",
+                    releaseRepo: "libs-release-local",
+                    snapshotRepo: "libs-snapshot-local"
+                )
+
+                rtMavenResolver (
+                    id: "MAVEN_RESOLVER",
+                    serverId: "devops",
+                    
+                    releaseRepo: "libs-release",
+                    snapshotRepo: "libs-snapshot"
+                )
+                
+            }
+        }
+        stage ('Build Version Update') {
+          steps {
+
+               sh 'sed -i -e s/BUILD_NUMBER/1.0.${BUILD_NUMBER}/g $WORKSPACE/project/src/main/webapp/index.html'
+               sh 'sed -i -e s/BUILD_NUMBER/1.0.${BUILD_NUMBER}/g $WORKSPACE/project/src/main/Webapp/index.html'
+
+
+          }
+
+
+
+        }
+
+  stage ('Exec Maven') {
+            steps {
+               slackSend channel: '#devops', message: 'Build  started'
+
+                rtMavenRun (
+                                tool: "maven", // Tool name from Jenkins configuration
+                                pom: 'pom.xml',
+                                goals: 'clean install ',
+                                deployerId: "MAVEN_DEPLOYER",
+                                resolverId: "MAVEN_RESOLVER"
+                            )
+                rtDownload (
+                  serverId: 'devops',
+                  failNoOp: true,
+                  spec: '''{
+                    "files": [
+                    {
+                      "pattern": "libs-release-local/ci/jenkins/aws/project/1.0.${BUILD_NUMBER}/*.war",
+                      "target": "superLeague/"
+                    }
+                  ]
+                  }''',
+
+                    
+                )
+                    }
+        }
+      
+
+stage ('PostBuild Cleanup') {
+  steps{
+cleanWs()
+}
+}
+
+}
+}
