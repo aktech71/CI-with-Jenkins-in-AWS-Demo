@@ -74,7 +74,7 @@ stages {
 stage('Docker Build'){
   steps{
     sh '''
-      docker images
+      /usr/bin/docker images
     '''
   }
 }
