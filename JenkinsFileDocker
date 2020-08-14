@@ -46,7 +46,6 @@ stages {
 
   stage ('Exec Maven') {
             steps {
-               slackSend channel: '#devops', message: 'Build  started'
 
                 rtMavenRun (
                                 tool: "maven", // Tool name from Jenkins configuration
@@ -72,6 +71,13 @@ stages {
                     }
         }
       
+stage('Docker Build'){
+  steps{
+    sh '''
+      sudo docker images
+    '''
+  }
+}
 
 stage ('PostBuild Cleanup') {
   steps{
