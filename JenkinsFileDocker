@@ -74,7 +74,7 @@ stages {
 stage('Docker Build'){
   steps{
     sh '''
-      sudo docker images
+      docker images
     '''
   }
 }
