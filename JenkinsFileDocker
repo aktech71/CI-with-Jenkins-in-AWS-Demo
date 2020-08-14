@@ -10,7 +10,7 @@ stages {
             steps {
                 rtServer (
                     id: "devops",
-                    url: "http://104.154.172.229:8082/artifactory",
+                    url: "http://35.193.193.143:8082/artifactory",
                     credentialsId: "jfrog"
                 )
 
