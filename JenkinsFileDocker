@@ -75,8 +75,9 @@ stage('Docker Build'){
   steps{
     sh '''
       cp -r project/target/*.war .
-      /usr/bin/docker build .
+      /usr/bin/docker build -t aktech71:8.0.1 . 
       /usr/bin/docker images
+     # /usr/bin/docker run -d -it --rm -p 8888:8080 tomcat:8.0.1
     '''
   }
 }
