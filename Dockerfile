@@ -4,5 +4,5 @@ RUN sudo apt-get update
 
 RUN sudo apt-get install default-jdk
 
-ADD /var/lib/jenkins/workspace/buildPipeline/project/target/project-1.0-RAMA.war /var/lib/tomcat8/webapps/
+ADD /var/lib/jenkins/workspace/docker-pipeline/superLeague/**/*.war /var/lib/tomcat8/webapps/
 
