@@ -74,6 +74,7 @@ stages {
 stage('Docker Build'){
   steps{
     sh '''
+      cp -r project/target/*.war .
       /usr/bin/docker build .
       /usr/bin/docker images
     '''
