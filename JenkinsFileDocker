@@ -88,10 +88,13 @@ stage('Docker Deploy'){
     sh '''
       /usr/bin/docker pull aktech71/tomcatdemo:${BUILD_NUMBER}
       /usr/bin/docker run -d -it --rm -p 8888:8080 aktech71/tomcatdemo:${BUILD_NUMBER}
-      curl http://34.70.7.16:8888/project-1.0.${BUILD_NUMBER}
+      
+      echo "Access application on -  http://34.70.7.16:8888/project-1.0.${BUILD_NUMBER}"
+      
     '''
   }
 }
+
 stage ('PostBuild Cleanup') {
   steps{
 cleanWs()
