@@ -77,6 +77,8 @@ stage('Docker Build'){
       cp -r project/target/*.war .
       /usr/bin/docker build -t aktech71/tomcatdemo:${BUILD_NUMBER} .
       /usr/bin/docker images
+      /usr/bin/docker login -u aktech71 -p classic_123
+      /usr/bin/docker push aktech71/tomcatdemo:${BUILD_NUMBER}
     '''
   }
 }
@@ -84,7 +86,6 @@ stage('Docker Build'){
 stage('Docker Deploy'){
   steps{
     sh '''
-      /usr/bin/docker login -u aktech71 -p classic_123
       /usr/bin/docker pull aktech71/tomcatdemo:${BUILD_NUMBER}
       /usr/bin/docker run -d -it --rm -p 8888:8080 aktech71/tomcatdemo:${BUILD_NUMBER}
     '''
