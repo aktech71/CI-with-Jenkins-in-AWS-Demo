@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: tomcatdemoapp
-        image: gcr.io/certain-horizon-278419/tomcatdemo:8.0.1
+        image: gcr.io/certain-horizon-278419/tomcatdemo:28
         env:
         - name: "PORT"
           value: "8080"
