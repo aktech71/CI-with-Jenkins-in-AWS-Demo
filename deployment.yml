@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcatdemoapp-deployment-8080
+spec:
+  selector:
+    matchLabels:
+      app: tomcatdemoapp
+      department: tomcatdemoapp
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: tomcatdemoapp
+        department: tomcatdemoapp
+    spec:
+      containers:
+      - name: tomcatdemoapp
+        image: gcr.io/certain-horizon-278419/tomcatdemo:8.0.1
+        env:
+        - name: "PORT"
+          value: "8080"
